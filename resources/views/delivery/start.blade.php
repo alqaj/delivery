@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <h4>Jumlah Part Delivery yg Ter-Scan:</h4>
-                        <h1 id="waktu">120 pcs</h1>
+                        <h1 id="total_delivery">Loading...</h1>
                     </div>
                 </div>
             </div>
@@ -69,6 +69,23 @@
 
             // Panggil fungsi updateWaktu setiap detik
             setInterval(updateWaktu, 1000);
+
+            function updateTotalDelivery() {
+                // Make an API request to get the total delivery count from the Zebra FX9600
+                $.ajax({
+                    url: 'http://172.18.12.37/api/getTotalDelivery', // Update the URL with the actual API endpoint
+                    method: 'GET',
+                    success: function (data) {
+                        // Update the content of the total_delivery element
+                        $('#total_delivery').text(data.total);
+                    },
+                    error: function (error) {
+                        console.error('Error fetching total delivery:', error);
+                    }
+                });
+            }
+
+            updateTotalDelivery();
         })
     </script>
 @endpush
