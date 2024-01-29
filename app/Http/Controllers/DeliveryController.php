@@ -22,9 +22,7 @@ class DeliveryController extends Controller
     
     public function start(Request $request)
     {
-        // dd($request->input("uuid"));
         $destination = Destination::where('uuid',$request->input('uuid'))->first();
-        // dd($destination);
         $imageData = $request->input('photo'); // Mendapatkan data URI foto dari formulir
         $imageData = substr($imageData, strpos($imageData, ',') + 1);
         $decodedImage = base64_decode($imageData); // Mendecode data base64 menjadi biner
@@ -53,4 +51,26 @@ class DeliveryController extends Controller
         return view("delivery.index");
 
     }
+
+    public function scan()
+    {
+        $delivery = Delivery::latest()->first();
+
+        return view('scan.index', compact('delivery'));
+    }
+
+    public function pulling()
+    {
+        $delivery = Delivery::latest()->first();
+
+        return view('scan.pulling', compact('delivery'));
+    }
+
+
+    // public function pulling($uuid)
+    // {
+    //     $delivery = Delivery::findOrFail($uuid);
+    // }
+
+  
 }
